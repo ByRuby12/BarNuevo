@@ -183,15 +183,15 @@ function renderContactoSection() {
         <h2 class="contacto-nombre">${info.nombreBar || ''}</h2>
       </div>
       <div class="contacto-datos-simples">
-        <div class="contacto-dato">
+        <div class="contacto-dato-simple">
           <strong>📍 ${window.currentLanguage === 'en' ? 'Address' : 'Dirección'}</strong>
           <span>${info.direccion || ''}</span>
         </div>
-        <div class="contacto-dato">
+        <div class="contacto-dato-simple">
           <strong>⏰ ${window.currentLanguage === 'en' ? 'Opening hours' : 'Horario'}</strong>
           <span>${info.horario || ''}</span>
         </div>
-        <div class="contacto-dato">
+        <div class="contacto-dato-simple">
           <strong>📧 ${window.currentLanguage === 'en' ? 'Email' : 'Correo'}</strong>
           <span>${info.email || ''}</span>
         </div>
