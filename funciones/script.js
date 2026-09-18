@@ -186,7 +186,7 @@ function renderContactoSection() {
         <div>📍 ${info.direccion || ''}</div>
         <div>⏰ ${info.horario || ''}</div>
         <div>📧 ${info.email || ''}</div>
-        ${serviciosHTML}${serviciosHTML}
+        ${serviciosHTML}
         <div class="enlace-google-maps">
           ${info.enlaceGoogleMaps ? `<a href="${info.enlaceGoogleMaps}" class="btn-reseña-google" target="_blank" rel="noopener">${window.currentLanguage === 'en' ? '📱 Rate us now' : '📱 Calificanos ahora'}</a><br>` : ''}
           ${info.telefono ? `<a href="tel:${info.telefono}" class="btn-contactar">${window.currentLanguage === 'en' ? '📞 Contact now' : '📞 Contactar ahora'}</a>` : ''}
