@@ -183,12 +183,21 @@ function renderContactoSection() {
         <h2 class="contacto-nombre">${info.nombreBar || ''}</h2>
       </div>
       <div class="contacto-datos-simples">
-        <div>📍 ${info.direccion || ''}</div>
-        <div>⏰ ${info.horario || ''}</div>
-        <div>📧 ${info.email || ''}</div>
+        <div class="contacto-dato">
+          <strong>📍 ${window.currentLanguage === 'en' ? 'Address' : 'Dirección'}</strong>
+          <span>${info.direccion || ''}</span>
+        </div>
+        <div class="contacto-dato">
+          <strong>⏰ ${window.currentLanguage === 'en' ? 'Opening hours' : 'Horario'}</strong>
+          <span>${info.horario || ''}</span>
+        </div>
+        <div class="contacto-dato">
+          <strong>📧 ${window.currentLanguage === 'en' ? 'Email' : 'Correo'}</strong>
+          <span>${info.email || ''}</span>
+        </div>
         ${serviciosHTML}
         <div class="enlace-google-maps">
-          ${info.enlaceGoogleMaps ? `<a href="${info.enlaceGoogleMaps}" class="btn-reseña-google" target="_blank" rel="noopener">${window.currentLanguage === 'en' ? '📱 Rate us now' : '📱 Calificanos ahora'}</a><br>` : ''}
+          ${info.enlaceGoogleMaps ? `<a href="${info.enlaceGoogleMaps}" class="btn-reseña-google" target="_blank" rel="noopener">${window.currentLanguage === 'en' ? '📱 Rate us now' : '📱 Califícanos ahora'}</a><br>` : ''}
           ${info.telefono ? `<a href="tel:${info.telefono}" class="btn-contactar">${window.currentLanguage === 'en' ? '📞 Contact now' : '📞 Contactar ahora'}</a>` : ''}
         </div>
       </div>
