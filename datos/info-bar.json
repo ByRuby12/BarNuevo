@@ -130,8 +130,8 @@
   "desarrollador_en": "Designed and developed by ByRuby12 - V1.0",
   "footerDerechos_en": "Copyright ©{year} All rights reserved for {bar}",
   "servicios": {
-    "justEat": "",
-    "uberEats": "",
-    "glovo": ""
+    "justEat": "https://www.just-eat.es/",
+    "uberEats": "https://www.ubereats.com/es/",
+    "glovo": "https://glovoapp.com/es/"
   }
 }
