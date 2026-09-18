@@ -86,6 +86,25 @@ function toggleLanguage() {
   cargarMenuSegunIdioma();
 }
 
+function actualizarTextoFooter() {
+  const info = window.infoBar || {};
+  const derechos = document.getElementById('footer-derechos');
+  if (!derechos) return;
+  const year = new Date().getFullYear();
+  const isEnglish = window.currentLanguage === 'en';
+  const desarrollador = isEnglish ? (info.desarrollador_en || info.desarrollador || '') : (info.desarrollador || '');
+  const footerDerechos = isEnglish ? (info.footerDerechos_en || info.footerDerechos || '') : (info.footerDerechos || '');
+  derechos.innerHTML = '';
+  const autorDiv = document.createElement('div');
+  autorDiv.textContent = desarrollador;
+  derechos.appendChild(autorDiv);
+  derechos.appendChild(document.createTextNode(
+    footerDerechos
+      ? footerDerechos.replace('{year}', year).replace('{bar}', info.nombreBar || '')
+      : `© ${year} ${info.nombreBar || ''}`
+  ));
+}
+
 function cargarInfoBar(callback) {
   fetch('datos/info-bar.json')
     .then(response => response.json())
@@ -144,7 +163,7 @@ function renderContactoSection() {
       <div class="contacto-datos-simples">
         <div>📍 ${info.direccion || ''}</div>
         <div>⏰ ${info.horario || ''}</div>
-        <div>📧 ${info.email || ''}</div>
+        <div>📧 ${info.email || ''}</div>${serviciosHTML}
         <div class="enlace-google-maps">
           ${info.enlaceGoogleMaps ? `<a href="${info.enlaceGoogleMaps}" class="btn-reseña-google" target="_blank" rel="noopener">${window.currentLanguage === 'en' ? '📱 Rate us now' : '📱 Calificanos ahora'}</a><br>` : ''}
           ${info.telefono ? `<a href="tel:${info.telefono}" class="btn-contactar">${window.currentLanguage === 'en' ? '📞 Contact now' : '📞 Contactar ahora'}</a>` : ''}
