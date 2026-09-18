@@ -55,6 +55,8 @@ function updateLanguageButtonText() {
   const btn = document.getElementById('language-toggle');
   if (!btn) return;
   const isEnglish = window.currentLanguage === 'en';
+  const socialTitle = document.getElementById('footer-social-title');
+  if (socialTitle) socialTitle.textContent = isEnglish ? 'Social media' : 'Redes sociales';
   // Usar icono de globo (FontAwesome). Mantener title y clases para accesibilidad y estilos.
   btn.innerHTML = '<i class="fas fa-globe" aria-hidden="true"></i>';
   btn.title = isEnglish ? 'Switch to English' : 'Cambiar a Español';
@@ -83,6 +85,7 @@ function toggleLanguage() {
   window.currentLanguage = window.currentLanguage === 'en' ? 'es' : 'en';
   localStorage.setItem('language', window.currentLanguage);
   updateLanguageButtonText();
+  actualizarTextoFooter();
   cargarMenuSegunIdioma();
 }
 
@@ -153,6 +156,25 @@ function inicializarInfoBarYMeta() {
 
 function renderContactoSection() {
   const info = window.infoBar || {};
+  const servicios = info.servicios || {};
+  const serviciosDisponibles = [
+    { nombre: 'Just Eat', clave: 'justEat', logo: 'justeat', aria: 'Pedir en Just Eat' },
+    { nombre: 'Uber Eats', clave: 'uberEats', logo: 'ubereats', aria: 'Pedir en Uber Eats' },
+    { nombre: 'Glovo', clave: 'glovo', logo: 'glovo', aria: 'Pedir en Glovo' }
+  ].filter(servicio => typeof servicios[servicio.clave] === 'string' && servicios[servicio.clave].trim() && servicios[servicio.clave] !== '#');
+  const isEnglish = window.currentLanguage === 'en';
+  const serviciosHTML = serviciosDisponibles.length ? `
+        <div class="servicios-entrega">
+          <h3>${isEnglish ? 'Services' : 'Servicios'}</h3>
+          <div class="servicios-entrega-lista">
+            ${serviciosDisponibles.map(servicio => `
+              <a class="servicio-entrega" href="${servicios[servicio.clave]}" target="_blank" rel="noopener" aria-label="${servicio.aria}">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/${servicio.logo}.svg" alt="">
+                <span>${servicio.nombre}</span>
+              </a>
+            `).join('')}
+          </div>
+        </div>` : '';
   const menuContainer = document.getElementById('menu-container');
   menuContainer.innerHTML = `
     <section class="contacto-section animate-contacto contacto-simple">
@@ -163,7 +185,8 @@ function renderContactoSection() {
       <div class="contacto-datos-simples">
         <div>📍 ${info.direccion || ''}</div>
         <div>⏰ ${info.horario || ''}</div>
-        <div>📧 ${info.email || ''}</div>${serviciosHTML}
+        <div>📧 ${info.email || ''}</div>
+        ${serviciosHTML}${serviciosHTML}
         <div class="enlace-google-maps">
           ${info.enlaceGoogleMaps ? `<a href="${info.enlaceGoogleMaps}" class="btn-reseña-google" target="_blank" rel="noopener">${window.currentLanguage === 'en' ? '📱 Rate us now' : '📱 Calificanos ahora'}</a><br>` : ''}
           ${info.telefono ? `<a href="tel:${info.telefono}" class="btn-contactar">${window.currentLanguage === 'en' ? '📞 Contact now' : '📞 Contactar ahora'}</a>` : ''}
@@ -412,20 +435,7 @@ function inicializarWeb() {
         divider.style.display = redesVisibles > 0 ? "" : "none";
       }
 
-      const year = new Date().getFullYear();
-      const derechos = document.getElementById('footer-derechos');
-      if (derechos) {
-        derechos.innerHTML = ""; 
-        const autorDiv = document.createElement('div');
-        autorDiv.textContent = `${info.desarrollador || ''}`;
-        derechos.appendChild(autorDiv);
-
-        if (info.footerDerechos) {
-          derechos.appendChild(document.createTextNode(info.footerDerechos.replace('{year}', year).replace('{bar}', info.nombreBar || '')));
-        } else {
-          derechos.appendChild(document.createTextNode(`© ${year} ${info.nombreBar || ''}`));
-        }
-      }
+      actualizarTextoFooter();
 
       updateLanguageButtonText();
       const langBtn = document.getElementById('language-toggle');
